@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{{ page.title|striptags }}{% endblock title %}
+{% block content %}
+
+          <article class="post">
+            <header>
+              <h1><a href="/{{ page.url }}" class="no-link" rel="bookmark" title="Permalink to {{ page.title|striptags }}">{{ page.title }}</a></h1>
+            </header>
+            {{ page.content }}
+          </article>
+
+{% endblock content %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}        
+
+{% for article in articles_page.object_list %}        
+          <article class="post">
+            <header>
+              <h2><a href="/{{ article.url }}" class="no-link" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a></h2>
+              <time datetime="{{ article.date.isoformat() }}" pubdate="pubdate">{{ article.locale_date }}</time>
+            </header>
+            {{ article.content }}
+          </article>
+{% endfor %}
+
+{% include 'pagination.html' %}
+{% endblock content %}

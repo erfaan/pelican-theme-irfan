@@ -1,0 +1,18 @@
+{% if DEFAULT_PAGINATION %}
+          <nav class="pagination">
+            {% if articles_page.has_previous() %}
+            <span class="next">
+            {% if articles_page.previous_page_number() == 1 %}
+              <a href="{{ SITEURL }}/{{ page_name }}.html" rel="next">Newer&nbsp;&nbsp;&nbsp;&rarr;</a>
+            {% else %}
+              <a href="{{ SITEURL }}/{{ page_name }}{{ articles_page.previous_page_number() }}.html" rel="next">Newer&nbsp;&nbsp;&nbsp;&rarr;</a>
+            {% endif %}
+            </span>
+            {% endif %}
+            {% if articles_page.has_next() %}
+            <span class="prev">
+              <a href="{{ SITEURL }}/{{ page_name }}{{ articles_page.next_page_number() }}.html" rel="prev">&larr;&nbsp;&nbsp;&nbsp;Older</a>
+            </span>
+            {% endif %}
+          </nav>
+{% endif %}
