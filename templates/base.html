@@ -9,16 +9,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         {% if WEBASSETS %}
-        {% assets filters="yui_css", output="css/style.css", "css/bootstrap.mincss.css", "css/bootstrap-responsive.min.mincss.css", "css/main.mincss.css", "css/pygment.css", "css/typogrify.css" %}
+
+        {% assets filters="cssmin", output="css/style.css", "css/bootstrap.mincss.css", "css/bootstrap-responsive.min.mincss.css", "css/main.mincss.css", "css/pygment.css", "css/typogrify.css" %}
         <link rel="stylesheet" href="{{ SITEURL }}/{{ ASSET_URL }}">
         {% endassets %}
+
+        {% assets filters="rjsmin", output="js/all.js", "js/vendor/modernizr-2.6.1-respond-1.1.0.min.js" %}
+        <script src="{{ SITEURL }}/{{ ASSET_URL }}"></script>
+        {% endassets %}
+
         {% else %}
         <link rel="stylesheet" href="{{ SITEURL }}/theme/css/bootstrap.css">
         <link rel="stylesheet" href="{{ SITEURL }}/theme/css/bootstrap-responsive.min.css">
         <link rel="stylesheet" href="{{ SITEURL }}/theme/css/main.css">
         <link rel="stylesheet" href="{{ SITEURL }}/theme/css/pygment.css">
         <link rel="stylesheet" href="{{ SITEURL }}/theme/css/typogrify.css">
+
+	<script src="{{ SITEURL }}/theme/js/js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
         {% endif %}
+
         {% if FEED_ALL_ATOM %}
         <link rel="alternate" href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml" title="{{ SITENAME }} Atom Feed" />
         {% endif %}
@@ -27,9 +36,6 @@
 
         {% block extrahead %}{% endblock extrahead %}
 
-        {% assets filters="yui_js", output="js/all.js", "js/vendor/modernizr-2.6.1-respond-1.1.0.min.js" %}
-        <script src="{{ SITEURL }}/{{ ASSET_URL }}"></script>
-        {% endassets %}
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -45,9 +51,9 @@
                 <li class="link projects"><a href="{{ SITEURL }}/{{ p.url }}">{{ p.title }}</a></li>
                 {% endif %}
             {% endfor %}
-            <li class="link twitter"><a href="http://twitter.com/erfaan">@erfaan</a></li>
-            <li class="link github"><a href="https://github.com/erfaan">github.com/erfaan</a></li>
-            <li class="link email"><a href="mailto:hello@i.com.pk?subject=hi">say hello</a></li>
+            {% for title, url in SOCIAL %}
+            <li class="link {{ title }}"><a href="{{ url }}" id="{{ title }}-link">{{ title }}</a></li>
+            {% endfor %}
             <li class="link feed"><a href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml" rel="alternate">feed</a></li>
           </ul>
           
@@ -57,16 +63,7 @@
             {% block content %}
             {% endblock %}
         </section>
-{#
-<!--
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.2.min.js"><\/script>')</script>
 
-        <script src="js/vendor/bootstrap.min.js"></script>
-
-        <script src="js/main.js"></script>
--->
-#}
 {% include 'analytics.html' %}
     </body>
 </html>
